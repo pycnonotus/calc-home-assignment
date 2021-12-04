@@ -28,7 +28,7 @@ namespace Api.Controllers
             {
                 return await mathResolver.ResolveMathQuestionAsync(mathQuestionDto);
             }
-            catch (ArgumentException ex) // to catch dived by 0 or unknown operator , other errors should by handheld in lower layer of this program, for example some middle-ware , but as it a home assigment there no one :( ,   
+            catch (ArgumentException ex) // to catch dived by 0 or unknown operator and etc...
             {
                 return BadRequest(new ApiResponse(400, ex.Message));
             }
