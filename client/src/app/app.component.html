@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()">
+  <input name="first-number" type="number" [(ngModel)]="x" />
+  <select [(ngModel)]="mathOperator" name="math-operator">
+    <option>*</option>
+    <option>+</option>
+    <option>/</option>
+    <option>-</option>
+  </select>
+  <input type="number" [(ngModel)]="y" name="second-number" />
+  =
+  <input type="text" disable [value]="solution" />
+  <button>calculate</button>
+</form>
+<p class="error">{{errorMessage}}</p>
