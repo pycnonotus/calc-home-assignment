@@ -20,7 +20,7 @@ export class CalculatorService {
     });
   }
 
-  // angualr dose wierd mannuplatopn on '+' so i add manualy the params
+  // angular does weird manipulation on the '+' sign so i add manually the params to the uri
   private uriParams(mathQuestion: MathQuestion): string {
     mathQuestion = { ...mathQuestion };
     if (mathQuestion.mathOperator === '+') mathQuestion.mathOperator = CalculatorService.PLUS_SIGN_ENCODED as '+';
