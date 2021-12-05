@@ -22,7 +22,9 @@ export class AppComponent {
   onSubmit(): void {
     const question: MathQuestion = { x: this.x, y: this.y, mathOperator: this.mathOperator };
     this.calculatorService.calculateMathQuestion(question).subscribe(res => {
-      this.solution = res;
+
+
+      this.solution = res.value;
     }, (err) => {
       console.log(err);
       if (err.status === 400) {

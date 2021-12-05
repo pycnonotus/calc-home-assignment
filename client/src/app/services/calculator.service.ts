@@ -14,26 +14,18 @@ export class CalculatorService {
   private static PLUS_SIGN_ENCODED = '%2B';
   constructor(private http: HttpClient) { }
 
-  calculateMathQuestion(mathQuestion: MathQuestion): Observable<number> {
-    return this.http.get<number>(environment.baseurl + '/math-calculator', {
-      params: { ...mathQuestion },
+  calculateMathQuestion(mathQuestion: MathQuestion): Observable<{ value: number; }> {
+    return this.http.get<{ value: number; }>(environment.baseurl + '/math-calculator' + this.uriParams(mathQuestion), {
+      // params: { ...mathQuestion },
     });
   }
 
-  private mathQuestionToParams(mathQuestion: MathQuestion): HttpParams {
-    let params = new HttpParams();
-    params = params.set('x', mathQuestion.x);
-    params = params.set('y', mathQuestion.y);
-    params = params.set('mathOperator', mathQuestion.mathOperator);
-    return params;
+  // angualr dose wierd mannuplatopn on '+' so i add manualy the params
+  private uriParams(mathQuestion: MathQuestion): string {
+    mathQuestion = { ...mathQuestion };
+    if (mathQuestion.mathOperator === '+') mathQuestion.mathOperator = CalculatorService.PLUS_SIGN_ENCODED as '+';
+    return `?mathOperator=${mathQuestion.mathOperator}&x=${mathQuestion.x}&y=${mathQuestion.y}`;
   }
 
-  private endCode(mathQuestion: MathQuestion): MathQuestionEndCoded {
-    return {
-      ...mathQuestion,
-      mathOperator: (mathQuestion.mathOperator === '+'
-        ? CalculatorService.PLUS_SIGN_ENCODED
-        : mathQuestion.mathOperator) as any, // HACK! , webpack thinks it is a string and not NotProblematicChars | '%2B'
-    };
-  }
+
 }
